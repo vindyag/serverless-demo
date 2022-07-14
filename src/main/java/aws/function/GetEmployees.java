@@ -1,4 +1,4 @@
-package function;
+package aws.function;
 
 import java.util.ArrayList;
 import java.util.List;

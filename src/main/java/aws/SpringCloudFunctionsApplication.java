@@ -1,7 +1,7 @@
-package function;
+package aws;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.function.context.FunctionalSpringApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.util.function.Consumer;
@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 public class SpringCloudFunctionsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringCloudFunctionsApplication.class, args);
+		FunctionalSpringApplication.run(SpringCloudFunctionsApplication.class, args);
 	}
 
 	@Bean

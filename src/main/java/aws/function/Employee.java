@@ -1,4 +1,4 @@
-package function;
+package aws.function;
 
 public class Employee {
 
