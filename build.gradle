@@ -1,8 +1,12 @@
 plugins {
     id 'java'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id "com.github.johnrengelman.shadow" version "7.1.2"
 }
-
+/*
+To deploy the application in AWS Lambda with Spring Cloud Function, you will need a shaded jar.
+To build this jar, we will use gradle shadow plugin.
+ */
 group 'demo'
 version '1.0-SNAPSHOT'
 
@@ -27,5 +31,31 @@ test {
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:2021.0.0"
+    }
+}
+
+assemble.dependsOn = [shadowJar]
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'aws.SpringCloudFunctionsApplication'
+    }
+}
+
+import com.github.jengelman.gradle.plugins.shadow.transformers.*
+
+shadowJar {
+    dependencies {
+        exclude(
+            dependency("org.springframework.cloud:spring-cloud-function-web"))
+    }
+    // Required for Spring
+    mergeServiceFiles()
+    append 'META-INF/spring.handlers'
+    append 'META-INF/spring.schemas'
+    append 'META-INF/spring.tooling'
+    transform(PropertiesFileTransformer) {
+        paths = ['META-INF/spring.factories']
+        mergeStrategy = "append"
     }
 }

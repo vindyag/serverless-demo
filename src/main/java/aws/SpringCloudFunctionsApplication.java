@@ -27,6 +27,7 @@ public class SpringCloudFunctionsApplication {
 
 	@Bean
 	public Consumer<String> writeMessage() {
+		System.out.println("Write Message invoked,..");
 		return (value) -> System.out.println(value);
 	}
 
